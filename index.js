@@ -15,8 +15,26 @@ var browserify = require('browserify'),
 	merge = require('merge-stream'),
 	reactify = require('reactify'),
 	run = require('run-sequence'),
+	semver = require('semver'),
 	source = require('vinyl-source-stream'),
 	watchify = require('watchify');
+
+try {
+	var projectGulpVersion = require(module.parent.paths[0] + '/gulp/package.json').version;
+} catch(e) {
+	
+}
+var packageGulpVersion = require('./node_modules/gulp/package.json').version;
+if (semver.satisfies(projectGulpVersion, '^' + packageGulpVersion)) {
+	console.log(
+		'\n' +
+		'\nYou do not have the correct version of Gulp installed in your project.' +
+		'\n' +
+		'\nPlease add gulp ^' + packageGulpVersion + ' to your package.json, npm install and try again.' +
+		'\n' +
+		'\n');
+	process.exit(1);
+}
 
 
 module.exports = function(gulp, config) {
