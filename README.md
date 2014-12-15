@@ -137,7 +137,7 @@ module.exports = {
 
 ## Contributing
 
-I wrote this package because maintaining my build process across multiple packages because a repetitive chore with large margin for error.
+I wrote this package because maintaining my build process across multiple packages became a repetitive chore with large margin for error.
 
 Although it's quite opinionated, hopefully it will be a useful resource for other package authors. It's got all the nice things I found to component development easy and fun, like a lightning-quick rebuild process with gulp-reload, consolidated publishing, and automated deployment to github pages.
 
