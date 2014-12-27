@@ -51,7 +51,7 @@ For a complete example see [JedWatson/react-component-starter](https://github.co
 ## Usage
 
 ```
-npm install --save-dev react-component-build-tasks
+npm install --save-dev react-component-gulp-tasks
 ```
 
 In your gulpfile, call this package with your `gulp` instance and `config`. It will add the tasks to gulp for you. You can also add your own tasks if you want.
