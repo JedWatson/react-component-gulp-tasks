@@ -3,6 +3,7 @@ var browserify = require('browserify'),
 	to5ify = require('6to5ify'),
 	chalk = require('chalk'),
 	del = require('del'),
+	to5 = require('gulp-6to5'),
 	bump = require('gulp-bump'),
 	connect = require('gulp-connect'),
 	deploy = require("gulp-gh-pages"),
@@ -156,7 +157,10 @@ module.exports = function(gulp, config) {
 			var examples = config.example.scripts.map(function(file) {
 				return {
 					file: file,
-					bundle: browserify(opts).exclude(config.component.pkgName).add('./' + config.example.src + '/' + file)
+					bundle: browserify(opts)
+						.exclude(config.component.pkgName)
+						.add('./' + config.example.src + '/' + file)
+						.transform(to5ify)
 				};
 			});
 			
@@ -197,7 +201,9 @@ module.exports = function(gulp, config) {
 	/**
 	 * Build examples
 	 */
-
+	
+	/*
+	TODO: why does this not work?
 	gulp.task('build:examples', function(callback) {
 		run(
 			'clean:examples',
@@ -209,6 +215,12 @@ module.exports = function(gulp, config) {
 			callback
 		);
 	});
+	*/
+	gulp.task('build:examples', [
+		'build:example:files',
+		'build:example:css',
+		'build:example:scripts'
+	]);
 
 	gulp.task('watch:examples', [
 		'build:example:files',
