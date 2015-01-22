@@ -244,7 +244,22 @@ module.exports = function(gulp, config) {
 
 
 	/**
-	 * Build task
+	 * Build lib
+	 */
+
+	gulp.task('clean:lib', function(done) {
+		del([config.component.lib], done);
+	});
+
+	gulp.task('build:lib', ['clean:lib'], function() {
+		return gulp.src(config.component.src + '/**/*.js')
+			.pipe(to5())
+			.pipe(gulp.dest(config.component.lib));
+	});
+
+
+	/**
+	 * Build dist
 	 */
 
 	gulp.task('clean:dist', function(done) {
@@ -275,7 +290,13 @@ module.exports = function(gulp, config) {
 		
 	});
 
+
+	/**
+	 * Build everything
+	 */
+
 	gulp.task('build', [
+		'build:lib',
 		'build:dist',
 		'build:examples'
 	]);
