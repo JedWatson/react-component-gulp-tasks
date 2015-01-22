@@ -19,6 +19,7 @@ The tasks assume you are following the following conventions for your project:
 
 * Package source has a single entry point in a source folder
 * The package will be published to both npm and bower
+* A transpiled version will be published to a lib folder (for Node.js, Browserify and Webpack)
 * A standalone package will be published to a dist folder (for Bower)
 * Examples consist of
 	* Static file(s) (e.g. html, images, etc)
@@ -32,14 +33,19 @@ The tasks assume you are following the following conventions for your project:
 bower.json
 package.json
 gulpfile.js
-src/
+src
 	MyComponent.js
-dist/
+lib
+	(contains transpiled source)
+	MyComponent.js
+dist
+	(contains packaged component)
     my-component.js
     my-component.min.js
-example/
-	dist (contains built examples)
-	src/
+example
+	dist
+		(contains built examples)
+	src
 		app.js
 		app.less
 		index.html
@@ -112,6 +118,7 @@ module.exports = {
 		file: 'MyComponent.js',
 		name: 'MyComponent',
 		src: 'src',
+		lib: 'lib',
 		dist: 'dist',
 		pkgName: pkg.name,
 		dependencies: dependencies
