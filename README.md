@@ -36,15 +36,15 @@ gulpfile.js
 src
 	MyComponent.js
 lib
-	(contains transpiled source)
+	// contains transpiled source
 	MyComponent.js
 dist
-	(contains packaged component)
+	// contains packaged component
     my-component.js
     my-component.min.js
 example
 	dist
-		(contains built examples)
+		// contains built examples
 	src
 		app.js
 		app.less
