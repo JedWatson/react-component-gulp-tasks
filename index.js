@@ -1,5 +1,6 @@
 var browserify = require('browserify'),
 	shim = require('browserify-shim'),
+	to5ify = require('6to5ify'),
 	chalk = require('chalk'),
 	del = require('del'),
 	bump = require('gulp-bump'),
@@ -12,7 +13,6 @@ var browserify = require('browserify'),
 	uglify = require('gulp-uglify'),
 	gutil = require('gulp-util'),
 	merge = require('merge-stream'),
-	reactify = require('reactify'),
 	run = require('run-sequence'),
 	semver = require('semver'),
 	source = require('vinyl-source-stream'),
@@ -146,9 +146,11 @@ module.exports = function(gulp, config) {
 		return function() {
 			
 			var common = browserify(opts),
-				bundle = browserify(opts).require('./' + config.component.src + '/' + config.component.file, { expose: config.component.pkgName }),
+				bundle = browserify(opts)
+					.transform(to5ify)
+					.require('./' + config.component.src + '/' + config.component.file, { expose: config.component.pkgName }),
 				standalone = browserify('./' + config.component.src + '/' + config.component.file, { standalone: config.component.name })
-					.transform(reactify)
+					.transform(to5ify)
 					.transform(shim);
 			
 			var examples = config.example.scripts.map(function(file) {
@@ -254,7 +256,7 @@ module.exports = function(gulp, config) {
 		var standalone = browserify('./' + config.component.src + '/' + config.component.file, {
 				standalone: config.component.name
 			})
-			.transform(reactify)
+			.transform(to5ify)
 			.transform(shim);
 		
 		config.component.dependencies.forEach(function(pkg) {
