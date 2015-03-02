@@ -1,9 +1,9 @@
 var browserify = require('browserify'),
 	shim = require('browserify-shim'),
-	to5ify = require('6to5ify'),
+	babelify = require('babelify'),
 	chalk = require('chalk'),
 	del = require('del'),
-	to5 = require('gulp-6to5'),
+	babel = require('gulp-babel'),
 	bump = require('gulp-bump'),
 	connect = require('gulp-connect'),
 	deploy = require("gulp-gh-pages"),
@@ -148,10 +148,10 @@ module.exports = function(gulp, config) {
 			
 			var common = browserify(opts),
 				bundle = browserify(opts)
-					.transform(to5ify)
+					.transform(babelify)
 					.require('./' + config.component.src + '/' + config.component.file, { expose: config.component.pkgName }),
 				standalone = browserify('./' + config.component.src + '/' + config.component.file, { standalone: config.component.name })
-					.transform(to5ify)
+					.transform(babelify)
 					.transform(shim);
 			
 			var examples = config.example.scripts.map(function(file) {
@@ -160,7 +160,7 @@ module.exports = function(gulp, config) {
 					bundle: browserify(opts)
 						.exclude(config.component.pkgName)
 						.add('./' + config.example.src + '/' + file)
-						.transform(to5ify)
+						.transform(babelify)
 				};
 			});
 			
@@ -265,7 +265,7 @@ module.exports = function(gulp, config) {
 
 	gulp.task('build:lib', ['clean:lib'], function() {
 		return gulp.src(config.component.src + '/**/*.js')
-			.pipe(to5())
+			.pipe(babel())
 			.pipe(gulp.dest(config.component.lib));
 	});
 
@@ -283,7 +283,7 @@ module.exports = function(gulp, config) {
 		var standalone = browserify('./' + config.component.src + '/' + config.component.file, {
 				standalone: config.component.name
 			})
-			.transform(to5ify)
+			.transform(babelify)
 			.transform(shim);
 		
 		config.component.dependencies.forEach(function(pkg) {
