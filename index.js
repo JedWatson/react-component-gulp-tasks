@@ -44,9 +44,9 @@ try {
 try {
 	// Check to make sure the local gulp and the project gulp match.
 	var packageGulpVersion = require('./node_modules/gulp/package.json').version;
-	if (semver.satisfies(projectGulpVersion, '^' + packageGulpVersion)) {
+	if (!semver.satisfies(projectGulpVersion, '^' + packageGulpVersion)) {
 		fatal(
-			'You do not have the correct version of Gulp installed in your project.',
+			'You have an incompatible version of Gulp installed (' + projectGulpVersion + ').',
 			'Please add gulp ^' + packageGulpVersion + ' to your package.json, npm install and try again.'
 		);
 	}
