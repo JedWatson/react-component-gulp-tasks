@@ -57,7 +57,7 @@ For a complete example see [JedWatson/react-component-starter](https://github.co
 ## Usage
 
 ```
-npm install --save-dev react-component-gulp-tasks
+npm install --save-dev gulp react-component-gulp-tasks
 ```
 
 In your gulpfile, call this package with your `gulp` instance and `config`. It will add the tasks to gulp for you. You can also add your own tasks if you want.
@@ -105,11 +105,11 @@ This is an example of the `config.js` file for the project structure above:
 // Read the package.json to detect the package name and dependencies
 var pkg = JSON.parse(require('fs').readFileSync('./package.json'));
 
-// Default dependencies from package.json, except reactify (which is used for
-// the build). Dependencies can be customised by hard-coding this array.
+// Get default dependencies from package.json.
+// Dependencies can be customised by hard-coding this array.
 var dependencies = [];
 Object.keys(pkg.dependencies).forEach(function(i) {
-	if (i !== 'reactify') dependencies.push(i);
+	dependencies.push(i);
 });
 
 module.exports = {
