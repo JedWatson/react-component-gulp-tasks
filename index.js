@@ -23,14 +23,10 @@ var browserify = require('browserify'),
  * Check that a compatible version of gulp is available in the project
  */
 
-function fatal(err) {
+function fatal() {
 	var msg = '\n\n';
-	if (Array.isArray(err)) {
-		err.forEach(function(i) {
-			msg += i + '\n\n';
-		});
-	} else {
-		msg += (err || 'Fatal error, bailing.') + '\n\n';
+	for (var i = 0; i < arguments.length; i++) {
+		msg += arguments[i] + '\n\n';
 	}
 	console.log(msg);
 	process.exit(1);
