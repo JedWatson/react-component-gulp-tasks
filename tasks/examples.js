@@ -112,7 +112,7 @@ module.exports = function(gulp, config) {
 	});
 
 	gulp.task('build:example:css', function() {
-		return gulp.src(config.example.src + '/' + config.example.stylesheets)
+		return gulp.src(config.example.src + '/' + config.example.less)
 			.pipe(less())
 			.pipe(gulp.dest(config.example.dist))
 			.pipe(connect.reload());
@@ -130,7 +130,7 @@ module.exports = function(gulp, config) {
 		'watch:example:scripts'
 	], function() {
 		gulp.watch(config.example.files.map(function(i) { return config.example.src + '/' + i }), ['build:example:files']);
-		gulp.watch([config.example.src + './' + config.example.stylesheets], ['build:example:css']);
+		gulp.watch([config.example.src + './' + config.example.less], ['build:example:css']);
 	});
 	
 }

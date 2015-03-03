@@ -91,7 +91,7 @@ function initTasks(gulp, config) {
 			scripts: [
 				'example.js'
 			],
-			stylesheets: [
+			less: [
 				'example.less'
 			]
 		});

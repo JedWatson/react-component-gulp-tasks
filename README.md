@@ -91,7 +91,7 @@ Required config keys are:
 * `example.dist` - the directory to build the distribution to
 * `example.files[]` - files will be copied as-is into the `example.dist` folder
 * `example.scripts[]` - scripts will be bundled by browserify and reactify
-* `example.stylesheets[]` - stylesheets will be generated with LESS
+* `example.less[]` - stylesheets will be generated with LESS
 
 ### Example
 
@@ -134,7 +134,7 @@ module.exports = {
 		scripts: [
 			'app.js'
 		],
-		stylesheets: [
+		less: [
 			'app.less'
 		]
 	}
