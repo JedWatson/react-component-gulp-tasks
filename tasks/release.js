@@ -1,6 +1,6 @@
 var git = require("gulp-git");
 
-module.exports = function(gulp) {
+module.exports = function(gulp, config) {
 
 	gulp.task('publish:tag', function(done) {
 		var pkg = require('./package.json');
@@ -22,10 +22,15 @@ module.exports = function(gulp) {
 			.on('close', done);
 	});
 
-	gulp.task('publish:examples', ['build:examples'], function() {
-		return gulp.src(config.example.dist + '/**/*').pipe(deploy());
-	});
+	var releaseTasks = ['publish:tag', 'publish:npm'];
+
+	if (config.example) {
+		gulp.task('publish:examples', ['build:examples'], function() {
+			return gulp.src(config.example.dist + '/**/*').pipe(deploy());
+		});
+		releaseTasks.push('publish:examples');
+	}
 	
-	gulp.task('release', ['publish:tag', 'publish:npm', 'publish:examples']);
+	gulp.task('release', releaseTasks);
 
 };

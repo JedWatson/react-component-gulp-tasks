@@ -58,6 +58,7 @@ function readPackageJSON() {
 
 function initTasks(gulp, config) {
 
+	if (!config) config = {};
 	if (!config.component) config.component = {};
 
 	if (!config.component.pkgName || !config.component.deps) {
@@ -82,15 +83,17 @@ function initTasks(gulp, config) {
 	require('./tasks/bump')(gulp, config);
 	require('./tasks/dev')(gulp, config);
 	require('./tasks/dist')(gulp, config);
-	require('./tasks/examples')(gulp, config);
 	require('./tasks/lib')(gulp, config);
 	require('./tasks/release')(gulp, config);
 
-	gulp.task('build', [
-		'build:lib',
-		'build:dist',
-		'build:examples'
-	]);
+	var buildTasks = ['build:lib', 'build:dist'];
+
+	if (config.example) {
+		require('./tasks/examples')(gulp, config);
+		buildTasks.push('build:examples');
+	}
+
+	gulp.task('build', buildTasks);
 
 }
 
