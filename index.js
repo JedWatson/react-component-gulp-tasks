@@ -54,3 +54,15 @@ module.exports = function(gulp, config) {
 	]);
 
 }
+
+module.exports.readPackageJSON = function readPackageJSON() {
+	var pkg = JSON.parse(require('fs').readFileSync('./package.json'));
+	var deps = [];
+	Object.keys(pkg.dependencies).forEach(function(i) {
+		deps.push(i);
+	});
+	return {
+		name: pkg.name,
+		deps: deps
+	};
+}
