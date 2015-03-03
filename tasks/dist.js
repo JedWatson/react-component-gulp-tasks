@@ -3,6 +3,7 @@ var browserify = require('browserify');
 var babelify = require('babelify');
 var shim = require('browserify-shim');
 var gutil = require('gulp-util');
+var less = require('gulp-less');
 var source = require('vinyl-source-stream');
 var rename = require('gulp-rename');
 var streamify = require('gulp-streamify');
@@ -14,7 +15,7 @@ module.exports = function(gulp, config) {
 		del([config.component.dist], done);
 	});
 
-	gulp.task('build:dist', ['clean:dist'], function() {
+	gulp.task('build:dist:scripts', ['clean:dist'], function() {
 
 		var standalone = browserify('./' + config.component.src + '/' + config.component.file, {
 				standalone: config.component.name
@@ -37,5 +38,18 @@ module.exports = function(gulp, config) {
 			.pipe(gulp.dest(config.component.dist));
 
 	});
+
+	var buildTasks = ['build:dist:scripts'];
+
+	if (config.component.less) {
+		gulp.task('build:dist:css', ['clean:dist'], function() {
+			return gulp.src(config.component.less)
+				.pipe(less())
+				.pipe(gulp.dest('dist'));
+		});
+		buildTasks.push('build:dist:css');
+	}
+
+	gulp.task('build:dist', buildTasks);
 
 }
