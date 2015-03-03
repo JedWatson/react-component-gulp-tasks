@@ -80,6 +80,23 @@ function initTasks(gulp, config) {
 		file: config.component.name + '.js'
 	});
 
+	if (config.example) {
+		if (config.example === true) config.example = {};
+		_.defaults(config.example, {
+			src: 'example/src',
+			dist: 'example/dist',
+			files: [
+				'index.html'
+			],
+			scripts: [
+				'example.js'
+			],
+			stylesheets: [
+				'example.less'
+			]
+		});
+	}
+
 	require('./tasks/bump')(gulp, config);
 	require('./tasks/dev')(gulp, config);
 	require('./tasks/dist')(gulp, config);
