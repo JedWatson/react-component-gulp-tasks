@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 /**
  * Check that a compatible version of gulp is available in the project
  */
@@ -56,11 +58,26 @@ function readPackageJSON() {
 
 function initTasks(gulp, config) {
 
+	if (!config.component) config.component = {};
+
 	if (!config.component.pkgName || !config.component.deps) {
 		var pkg = readPackageJSON();
-		config.component.pkgName = config.component.pkgName || pkg.name;
-		config.component.dependencies = config.component.dependencies || pkg.deps;
+		_.defaults(config.component, {
+			pkgName: pkg.name,
+			dependencies: pkg.deps
+		});
 	}
+
+	if (!config.component.name) {
+		config.component.name = _.capitalize(_.camelCase(config.component.pkgName));
+	}
+
+	_.defaults(config.component, {
+		src: 'src',
+		lib: 'lib',
+		dist: 'dist',
+		file: config.component.name + '.js'
+	});
 
 	require('./tasks/bump')(gulp, config);
 	require('./tasks/dev')(gulp, config);
