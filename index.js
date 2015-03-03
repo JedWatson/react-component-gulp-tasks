@@ -34,11 +34,33 @@ try {
 }
 
 /**
+ * Helper method to extract metadata from package.json
+ */
+
+function readPackageJSON() {
+	var pkg = JSON.parse(require('fs').readFileSync('./package.json'));
+	var deps = [];
+	Object.keys(pkg.dependencies).forEach(function(i) {
+		deps.push(i);
+	});
+	return {
+		name: pkg.name,
+		deps: deps
+	};
+}
+
+/**
  * This package exports a function that binds tasks to a gulp instance
  * based on the provided config.
  */
 
-module.exports = function(gulp, config) {
+function initTasks(gulp, config) {
+
+	if (!config.component.pkgName || !config.component.deps) {
+		var pkg = readPackageJSON();
+		config.component.pkgName = config.component.pkgName || pkg.name;
+		config.component.dependencies = config.component.dependencies || pkg.deps;
+	}
 
 	require('./tasks/bump')(gulp, config);
 	require('./tasks/dev')(gulp, config);
@@ -55,14 +77,5 @@ module.exports = function(gulp, config) {
 
 }
 
-module.exports.readPackageJSON = function readPackageJSON() {
-	var pkg = JSON.parse(require('fs').readFileSync('./package.json'));
-	var deps = [];
-	Object.keys(pkg.dependencies).forEach(function(i) {
-		deps.push(i);
-	});
-	return {
-		name: pkg.name,
-		deps: deps
-	};
-}
+module.exports = initTasks;
+module.exports.readPackageJSON = readPackageJSON;
