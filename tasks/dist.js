@@ -46,9 +46,12 @@ module.exports = function(gulp, config) {
 	gulp.task('build:dist:css', ['clean:dist'], function() {
 
 		return gulp.src('./' + config.component.src + '/' + config.component.name + '.less')
+			.pipe(gulp.dest('dist'))
+			.pipe(rename(config.component.name + '.css'))
 			.pipe(less())
 			.pipe(gulp.dest('dist'))
-			.pipe(rename(config.component.name + '.min.css')).pipe(minifyCSS()).pipe(gulp.dest(config.component.dist));
+			.pipe(rename(config.component.name + '.min.css'))
+			.pipe(minifyCSS()).pipe(gulp.dest(config.component.dist));
 	});
 	
 	buildTasks.push();
