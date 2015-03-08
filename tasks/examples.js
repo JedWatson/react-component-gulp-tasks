@@ -111,23 +111,25 @@ module.exports = function(gulp, config) {
 			.pipe(connect.reload());
 	});
 
-	function buildStylesheetsForExample(dev) {
-		return merge(
-			
-			gulp.src(config.example.src + '/' + config.example.less)
-				.pipe(less())
-				.pipe(gulp.dest(config.example.dist))
-				.pipe(connect.reload()),
-
-			gulp.src('./' + config.component.src + '/' + config.component.name + '.less')
-				.pipe(less())
-				.pipe(gulp.dest(config.example.dist))
-				.pipe(connect.reload())
+	function buildStylesheetsForExample() {
+		return function(){
+				return merge(
 				
-		);
+				gulp.src(config.example.src + '/' + config.example.less)
+					.pipe(less())
+					.pipe(gulp.dest(config.example.dist))
+					.pipe(connect.reload()),
+
+				gulp.src('./' + config.component.src + '/' + config.component.name + '.less')
+					.pipe(less())
+					.pipe(gulp.dest(config.example.dist))
+					.pipe(connect.reload())
+
+			)
+		};
 	};
 
-	gulp.task('build:example:css', buildStylesheetsForExample);
+	gulp.task('build:example:css', buildStylesheetsForExample());
 	
 	gulp.task('build:examples', [
 		'build:example:files',
