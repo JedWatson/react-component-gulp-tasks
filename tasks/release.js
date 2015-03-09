@@ -4,7 +4,7 @@ var deploy = require('gulp-gh-pages');
 module.exports = function(gulp, config) {
 
 	gulp.task('publish:tag', function(done) {
-		var pkg = require('./package.json');
+		var pkg = JSON.parse(require('fs').readFileSync('./package.json'));
 		var v = 'v' + pkg.version;
 		var message = 'Release ' + v;
 
