@@ -1,5 +1,5 @@
-var babel = require('gulp-babel'),
-	del = require('del')
+var babel = require('gulp-babel');
+var del = require('del');
 
 module.exports = function(gulp, config) {
 

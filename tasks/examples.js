@@ -1,14 +1,14 @@
-var browserify = require('browserify'),
-	shim = require('browserify-shim'),
-	babelify = require('babelify'),
-	chalk = require('chalk'),
-	del = require('del'),
-	connect = require('gulp-connect'),
-	less = require('gulp-less'),
-	gutil = require('gulp-util'),
-	merge = require('merge-stream'),
-	source = require('vinyl-source-stream'),
-	watchify = require('watchify');
+var browserify = require('browserify');
+var shim = require('browserify-shim');
+var babelify = require('babelify');
+var chalk = require('chalk');
+var del = require('del');
+var connect = require('gulp-connect');
+var less = require('gulp-less');
+var gutil = require('gulp-util');
+var merge = require('merge-stream');
+var source = require('vinyl-source-stream');
+var watchify = require('watchify');
 
 module.exports = function(gulp, config) {
 
