@@ -1,4 +1,5 @@
-var git = require("gulp-git");
+var git = require('gulp-git');
+var deploy = require('gulp-gh-pages');
 
 module.exports = function(gulp, config) {
 
