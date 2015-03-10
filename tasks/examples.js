@@ -115,15 +115,18 @@ module.exports = function(gulp, config) {
 		return function(){
 				return merge(
 				
-				gulp.src(config.example.src + '/' + config.example.less)
-					.pipe(less())
-					.pipe(gulp.dest(config.example.dist))
-					.pipe(connect.reload()),
+					gulp.src(config.example.src + '/' + config.example.less)
+						.pipe(less())
+						.pipe(gulp.dest(config.example.dist))
+						.pipe(connect.reload())
 
-				gulp.src('./' + config.component.src + '/' + config.component.name + '.less')
-					.pipe(less())
-					.pipe(gulp.dest(config.example.dist))
-					.pipe(connect.reload())
+					if(config.component.less){
+						,gulp.src('./' + config.component.src + '/' + config.component.less)
+							.pipe(less())
+							.pipe(gulp.dest(config.example.dist))
+							.pipe(connect.reload())	
+					}
+				
 
 			)
 		};

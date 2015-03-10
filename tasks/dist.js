@@ -40,21 +40,21 @@ module.exports = function(gulp, config) {
 
 	});
 
-	var buildTasks = ['build:dist:scripts', 'build:dist:css'];
+	var buildTasks = ['build:dist:scripts'];
 
+	if(config.component.less){
+		gulp.task('build:dist:css', ['clean:dist'], function() {
 
-	gulp.task('build:dist:css', ['clean:dist'], function() {
-
-		return gulp.src('./' + config.component.src + '/' + config.component.name + '.less')
-			.pipe(gulp.dest('dist'))
-			.pipe(rename(config.component.name + '.css'))
-			.pipe(less())
-			.pipe(gulp.dest('dist'))
-			.pipe(rename(config.component.name + '.min.css'))
-			.pipe(minifyCSS()).pipe(gulp.dest(config.component.dist));
-	});
-	
-	buildTasks.push();
+			return gulp.src('./' + config.component.src + '/' + config.component.less)
+				.pipe(gulp.dest('dist'))
+				.pipe(rename(config.component.name + '.css'))
+				.pipe(less())
+				.pipe(gulp.dest('dist'))
+				.pipe(rename(config.component.name + '.min.css'))
+				.pipe(minifyCSS()).pipe(gulp.dest(config.component.dist));
+		});
+		buildTasks.push('build:dist:css');
+	}
 
 	gulp.task('build:dist', buildTasks);
 

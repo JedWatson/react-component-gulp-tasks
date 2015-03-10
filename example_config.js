@@ -16,7 +16,8 @@ module.exports = {
 		src: 'src',
 		dist: 'dist',
 		pkgName: pkg.name,
-		dependencies: dependencies
+		dependencies: dependencies,
+		less: 'MyComponent.less'
 	},
 	
 	example: {
