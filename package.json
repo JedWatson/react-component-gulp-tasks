@@ -10,7 +10,7 @@
     "url": "https://github.com/JedWatson/react-component-gulp-tasks.git"
   },
   "dependencies": {
-    "babelify": "^5.0.3",
+    "babelify": "^5.0.4",
     "browserify": "^9.0.3",
     "browserify-shim": "^3.8.3",
     "chalk": "^1.0.0",
@@ -20,17 +20,17 @@
     "gulp-bump": "^0.2.2",
     "gulp-connect": "^2.2.0",
     "gulp-gh-pages": "^0.4.0",
-    "gulp-git": "^1.0.0",
+    "gulp-git": "^1.1.0",
     "gulp-less": "^3.0.1",
     "gulp-rename": "^1.2.0",
     "gulp-streamify": "^0.0.5",
     "gulp-uglify": "^1.1.0",
     "gulp-util": "^3.0.4",
-    "lodash": "^3.3.1",
+    "lodash": "^3.5.0",
     "merge-stream": "^0.1.7",
     "run-sequence": "^1.0.2",
     "semver": "^4.3.1",
-    "vinyl-source-stream": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
     "watchify": "^2.4.0"
   },
   "scripts": {
