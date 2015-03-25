@@ -100,10 +100,14 @@ function initTasks(gulp, config) {
 	require('./tasks/bump')(gulp, config);
 	require('./tasks/dev')(gulp, config);
 	require('./tasks/dist')(gulp, config);
-	require('./tasks/lib')(gulp, config);
 	require('./tasks/release')(gulp, config);
 
-	var buildTasks = ['build:lib', 'build:dist'];
+	var buildTasks = ['build:dist'];
+
+	if (config.component.lib) {
+		require('./tasks/lib')(gulp, config);
+		buildTasks.push('build:lib');
+	}
 
 	if (config.example) {
 		require('./tasks/examples')(gulp, config);
