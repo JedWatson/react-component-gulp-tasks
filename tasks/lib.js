@@ -8,7 +8,10 @@ module.exports = function(gulp, config) {
 	});
 
 	gulp.task('build:lib', ['clean:lib'], function() {
-		return gulp.src(config.component.src + '/**/*.js')
+		return gulp.src([
+				config.component.src + '/**/*.js',
+				'!**/__tests__/**/*'
+			])
 			.pipe(babel())
 			.pipe(gulp.dest(config.component.lib));
 	});
