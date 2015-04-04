@@ -8,6 +8,7 @@ var source = require('vinyl-source-stream');
 var rename = require('gulp-rename');
 var streamify = require('gulp-streamify');
 var uglify = require('gulp-uglify');
+var minifyCSS = require('gulp-minify-css');
 
 module.exports = function(gulp, config) {
 
@@ -41,11 +42,16 @@ module.exports = function(gulp, config) {
 
 	var buildTasks = ['build:dist:scripts'];
 
-	if (config.component.less) {
+	if(config.component.less){
 		gulp.task('build:dist:css', ['clean:dist'], function() {
-			return gulp.src(config.component.less)
+
+			return gulp.src('./' + config.component.src + '/' + config.component.less)
+				.pipe(gulp.dest('dist'))
+				.pipe(rename(config.component.name + '.css'))
 				.pipe(less())
-				.pipe(gulp.dest('dist'));
+				.pipe(gulp.dest('dist'))
+				.pipe(rename(config.component.name + '.min.css'))
+				.pipe(minifyCSS()).pipe(gulp.dest(config.component.dist));
 		});
 		buildTasks.push('build:dist:css');
 	}
