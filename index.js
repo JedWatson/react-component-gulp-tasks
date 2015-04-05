@@ -47,6 +47,11 @@ function readPackageJSON() {
 			deps.push(i);
 		});
 	}
+	if (pkg.peerDependencies) {
+		Object.keys(pkg.peerDependencies).forEach(function(i) {
+			deps.push(i);
+		});
+	}
 	return {
 		name: pkg.name,
 		deps: deps
