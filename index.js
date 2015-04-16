@@ -54,7 +54,8 @@ function readPackageJSON() {
 	}
 	return {
 		name: pkg.name,
-		deps: deps
+		deps: deps,
+		aliasify: pkg.aliasify
 	};
 }
 
@@ -65,11 +66,12 @@ function readPackageJSON() {
 
 function initTasks(gulp, config) {
 
+	var pkg = readPackageJSON();
+
 	if (!config) config = {};
 	if (!config.component) config.component = {};
 
 	if (!config.component.pkgName || !config.component.deps) {
-		var pkg = readPackageJSON();
 		_.defaults(config.component, {
 			pkgName: pkg.name,
 			dependencies: pkg.deps
@@ -78,6 +80,10 @@ function initTasks(gulp, config) {
 
 	if (!config.component.name) {
 		config.component.name = _.capitalize(_.camelCase(config.component.pkgName));
+	}
+	
+	if (!config.aliasify) {
+		config.aliasify = pkg.aliasify;
 	}
 
 	_.defaults(config.component, {

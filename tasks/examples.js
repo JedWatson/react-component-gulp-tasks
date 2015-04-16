@@ -1,3 +1,4 @@
+var aliasify = require('aliasify');
 var browserify = require('browserify');
 var shim = require('browserify-shim');
 var babelify = require('babelify');
@@ -50,21 +51,27 @@ module.exports = function(gulp, config) {
 
 		return function() {
 
-			var common = browserify(opts),
-				bundle = browserify(opts)
-					.transform(babelify)
-					.require('./' + config.component.src + '/' + config.component.file, { expose: config.component.pkgName }),
-				standalone = browserify('./' + config.component.src + '/' + config.component.file, { standalone: config.component.name })
-					.transform(babelify)
-					.transform(shim);
+			var common = browserify(opts);
+			
+			var bundle = browserify(opts);
+			bundle.transform(babelify);
+			config.aliasify && bundle.transform(aliasify);
+			bundle.require('./' + config.component.src + '/' + config.component.file, { expose: config.component.pkgName });
+			
+			var standalone = browserify('./' + config.component.src + '/' + config.component.file, { standalone: config.component.name });
+			standalone.transform(babelify);
+			config.aliasify && standalone.transform(aliasify);
+			standalone.transform(shim);
 
 			var examples = config.example.scripts.map(function(file) {
+				var fileBundle = browserify(opts);
+				fileBundle.exclude(config.component.pkgName);
+				fileBundle.add('./' + config.example.src + '/' + file);
+				fileBundle.transform(babelify);
+				config.aliasify && fileBundle.transform(aliasify);
 				return {
 					file: file,
-					bundle: browserify(opts)
-						.exclude(config.component.pkgName)
-						.add('./' + config.example.src + '/' + file)
-						.transform(babelify)
+					bundle: fileBundle
 				};
 			});
 
