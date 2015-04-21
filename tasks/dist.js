@@ -20,7 +20,9 @@ module.exports = function(gulp, config) {
 		var standalone = browserify('./' + config.component.src + '/' + config.component.file, {
 				standalone: config.component.name
 			})
-			.transform(babelify)
+			.transform(babelify.configure({
+				plugins: ['object-assign']
+			}))
 			.transform(shim);
 
 		config.component.dependencies.forEach(function(pkg) {
