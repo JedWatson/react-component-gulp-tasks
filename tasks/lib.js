@@ -12,7 +12,9 @@ module.exports = function(gulp, config) {
 				config.component.src + '/**/*.js',
 				'!**/__tests__/**/*'
 			])
-			.pipe(babel())
+			.pipe(babel({
+				plugins: ['object-assign']
+			}))
 			.pipe(gulp.dest(config.component.lib));
 	});
 
