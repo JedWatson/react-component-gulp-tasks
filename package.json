@@ -1,6 +1,6 @@
 {
   "name": "react-component-gulp-tasks",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "description": "Gulp Build Tasks for React Component Projects",
   "main": "index.js",
   "author": "Jed Watson",
