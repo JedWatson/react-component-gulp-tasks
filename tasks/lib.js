@@ -13,7 +13,7 @@ module.exports = function(gulp, config) {
 				'!**/__tests__/**/*'
 			])
 			.pipe(babel({
-				plugins: ['object-assign']
+				plugins: [require('babel-plugin-object-assign')]
 			}))
 			.pipe(gulp.dest(config.component.lib));
 	});

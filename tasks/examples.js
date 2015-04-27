@@ -55,14 +55,14 @@ module.exports = function(gulp, config) {
 			
 			var bundle = browserify(opts);
 			bundle.transform(babelify.configure({
-				plugins: ['object-assign']
+				plugins: [require('babel-plugin-object-assign')]
 			}));
 			config.aliasify && bundle.transform(aliasify);
 			bundle.require('./' + config.component.src + '/' + config.component.file, { expose: config.component.pkgName });
 			
 			var standalone = browserify('./' + config.component.src + '/' + config.component.file, { standalone: config.component.name });
 			standalone.transform(babelify.configure({
-				plugins: ['object-assign']
+				plugins: [require('babel-plugin-object-assign')]
 			}));
 			config.aliasify && standalone.transform(aliasify);
 			standalone.transform(shim);
@@ -72,7 +72,7 @@ module.exports = function(gulp, config) {
 				fileBundle.exclude(config.component.pkgName);
 				fileBundle.add('./' + config.example.src + '/' + file);
 				fileBundle.transform(babelify.configure({
-					plugins: ['object-assign']
+					plugins: [require('babel-plugin-object-assign')]
 				}));
 				config.aliasify && fileBundle.transform(aliasify);
 				return {

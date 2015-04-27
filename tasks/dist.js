@@ -21,7 +21,7 @@ module.exports = function(gulp, config) {
 				standalone: config.component.name
 			})
 			.transform(babelify.configure({
-				plugins: ['object-assign']
+				plugins: [require('babel-plugin-object-assign')]
 			}))
 			.transform(shim);
 
