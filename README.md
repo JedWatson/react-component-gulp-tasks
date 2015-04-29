@@ -35,6 +35,8 @@ package.json
 gulpfile.js
 src
 	MyComponent.js
+less
+	my-component.less
 lib
 	// contains transpiled source
 	MyComponent.js
@@ -42,6 +44,7 @@ dist
 	// contains packaged component
     my-component.js
     my-component.min.js
+    my-component.css
 example
 	dist
 		// contains built examples
@@ -84,6 +87,8 @@ Required config keys are:
 * `component.dist` - the directory to build the distribution to
 * `component.pkgName` - the name of the package that will be exported by the component (**must match the name of your package on npm**)
 * `component.dependencies[]` - array of common dependencies that will be excluded from the build, and included in a common bundle for the examples
+* `component.less.entry` - the entrypoint for the component stylesheet, if you're using less to provide one
+* `component.less.path` - the path of the less files. everything with a .less extension in this directory will be watched in for changes in development
 
 **`Example`**
 
@@ -95,41 +100,33 @@ Required config keys are:
 
 ### Example
 
-It is recommended you include your package name and dependencies from your `package.json` file for consistency.
-
-Note that if you add dependencies to your project that you **don't** want included in your common example bundle, you should exclude them from the dependencies array, or switch to using a hard-coded array.
-
 This is an example of the `config.js` file for the project structure above:
 
 ```javascript
-// Read the package.json to detect the package name and dependencies
-var pkg = JSON.parse(require('fs').readFileSync('./package.json'));
+var gulp = require('gulp');
+var initGulpTasks = require('react-component-gulp-tasks');
 
-// Get default dependencies from package.json.
-// Dependencies can be customised by hard-coding this array.
-var dependencies = [];
-Object.keys(pkg.dependencies).forEach(function(i) {
-	dependencies.push(i);
-});
+var taskConfig = {
 
-module.exports = {
-	
 	component: {
-		file: 'MyComponent.js',
 		name: 'MyComponent',
-		src: 'src',
-		lib: 'lib',
-		dist: 'dist',
-		pkgName: pkg.name,
-		dependencies: dependencies
+		dependencies: [
+			'blacklist',
+			'classnames',
+			'react',
+			'react/addons'
+		],
+		less: {
+			path: 'less',
+			entry: 'my-component.less'
+		}
 	},
-	
+
 	example: {
 		src: 'example/src',
 		dist: 'example/dist',
 		files: [
-			'index.html',
-			'standalone.html'
+			'index.html'
 		],
 		scripts: [
 			'app.js'
@@ -138,8 +135,11 @@ module.exports = {
 			'app.less'
 		]
 	}
-	
+
 };
+
+initGulpTasks(gulp, taskConfig);
+
 ```
 
 ## Contributing

@@ -16,7 +16,11 @@ module.exports = {
 		src: 'src',
 		dist: 'dist',
 		pkgName: pkg.name,
-		dependencies: dependencies
+		dependencies: dependencies,
+		less: {
+			entry: 'my-component.less',
+			path: 'less'
+		}
 	},
 	
 	example: {
