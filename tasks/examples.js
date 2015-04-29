@@ -60,12 +60,15 @@ module.exports = function(gulp, config) {
 			config.aliasify && bundle.transform(aliasify);
 			bundle.require('./' + config.component.src + '/' + config.component.file, { expose: config.component.pkgName });
 			
-			var standalone = browserify('./' + config.component.src + '/' + config.component.file, { standalone: config.component.name });
-			standalone.transform(babelify.configure({
-				plugins: [require('babel-plugin-object-assign')]
-			}));
-			config.aliasify && standalone.transform(aliasify);
-			standalone.transform(shim);
+			var standalone = false;
+			if (config.example.standalone) {
+				standalone = browserify('./' + config.component.src + '/' + config.component.file, { standalone: config.component.name });
+				standalone.transform(babelify.configure({
+					plugins: [require('babel-plugin-object-assign')]
+				}));
+				config.aliasify && standalone.transform(aliasify);
+				standalone.transform(shim);
+			}
 
 			var examples = config.example.scripts.map(function(file) {
 				var fileBundle = browserify(opts);
@@ -84,7 +87,7 @@ module.exports = function(gulp, config) {
 			config.component.dependencies.forEach(function(pkg) {
 				common.require(pkg);
 				bundle.exclude(pkg);
-				standalone.exclude(pkg);
+				if (standalone) standalone.exclude(pkg);
 				examples.forEach(function(eg) {
 					eg.bundle.exclude(pkg);
 				});
@@ -93,17 +96,22 @@ module.exports = function(gulp, config) {
 			if (dev) {
 				watchBundle(common, 'common.js', dest);
 				watchBundle(bundle, 'bundle.js', dest);
-				watchBundle(standalone, 'standalone.js', dest);
+				if (standalone) watchBundle(standalone, 'standalone.js', dest);
 				examples.forEach(function(eg) {
 					watchBundle(eg.bundle, eg.file, dest);
 				});
 			}
 
-			return merge([
+			var bundles = [
 				doBundle(common, 'common.js', dest),
-				doBundle(bundle, 'bundle.js', dest),
-				doBundle(standalone, 'standalone.js', dest)
-			].concat(examples.map(function(eg) {
+				doBundle(bundle, 'bundle.js', dest)
+			];
+
+			if (standalone) {
+				bundles.push(doBundle(standalone, 'standalone.js', dest));
+			}
+
+			return merge(bundles.concat(examples.map(function(eg) {
 				return doBundle(eg.bundle, eg.file, dest);
 			})));
 
