@@ -143,7 +143,11 @@ module.exports = function(gulp, config) {
 		'watch:example:scripts'
 	], function() {
 		gulp.watch(config.example.files.map(function(i) { return config.example.src + '/' + i }), ['build:example:files']);
-		gulp.watch([config.example.src + './' + config.example.less], ['build:example:css']);
+		var watchLess = [config.example.src + '/' + config.example.less];
+		if (config.component.less && config.component.less.path) {
+			watchLess.push(config.component.less.path + '/**/*.less');
+		}
+		gulp.watch([watchLess], ['build:example:css']);
 	});
 	
 }
