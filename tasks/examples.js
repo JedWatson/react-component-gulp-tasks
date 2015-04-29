@@ -125,6 +125,7 @@ module.exports = function(gulp, config) {
 	});
 
 	gulp.task('build:example:css', function() {
+		if (!config.example.less) return;
 		return gulp.src(config.example.src + '/' + config.example.less)
 			.pipe(less())
 			.pipe(gulp.dest(config.example.dist))
@@ -143,11 +144,14 @@ module.exports = function(gulp, config) {
 	], function() {
 		buildExampleScripts(true)();
 		gulp.watch(config.example.files.map(function(i) { return config.example.src + '/' + i }), ['build:example:files']);
-		var watchLess = [config.example.src + '/' + config.example.less];
-		if (config.component.less && config.component.less.path) {
-			watchLess.push(config.component.less.path + '/**/*.less');
+		var watchLESS = [];
+		if (config.example.less) {
+			watchLESS.push(config.example.src + '/' + config.example.less);
 		}
-		gulp.watch(watchLess, ['build:example:css']);
+		if (config.component.less && config.component.less.path) {
+			watchLESS.push(config.component.less.path + '/**/*.less');
+		}
+		gulp.watch(watchLESS, ['build:example:css']);
 	});
 	
 }
