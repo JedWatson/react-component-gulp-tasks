@@ -127,7 +127,7 @@ module.exports = function(gulp, config) {
 	gulp.task('build:example:scripts', buildExampleScripts());
 
 	gulp.task('build:example:files', function() {
-		return gulp.src(config.example.files.map(function(i) { return config.example.src + '/' + i }))
+		return gulp.src(config.example.files, { cwd: config.example.src, base: config.example.src })
 			.pipe(gulp.dest(config.example.dist))
 			.pipe(connect.reload());
 	});
