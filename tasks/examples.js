@@ -139,15 +139,15 @@ module.exports = function(gulp, config) {
 
 	gulp.task('watch:examples', [
 		'build:example:files',
-		'build:example:css',
-		'watch:example:scripts'
+		'build:example:css'
 	], function() {
+		buildExampleScripts(true)();
 		gulp.watch(config.example.files.map(function(i) { return config.example.src + '/' + i }), ['build:example:files']);
 		var watchLess = [config.example.src + '/' + config.example.less];
 		if (config.component.less && config.component.less.path) {
 			watchLess.push(config.component.less.path + '/**/*.less');
 		}
-		gulp.watch([watchLess], ['build:example:css']);
+		gulp.watch(watchLess, ['build:example:css']);
 	});
 	
 }
