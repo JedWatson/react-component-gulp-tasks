@@ -45,7 +45,7 @@ module.exports = function(gulp, config) {
 
 	if (config.component.less && config.component.less.entry) {
 		gulp.task('build:dist:css', ['clean:dist'], function() {
-			return gulp.src(config.component.less.entry)
+			return gulp.src(config.component.less.path + '/' + config.component.less.entry)
 				.pipe(less())
 				.pipe(gulp.dest('dist'));
 		});
