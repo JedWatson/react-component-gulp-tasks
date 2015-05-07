@@ -18,4 +18,11 @@ module.exports = function(gulp, config) {
 			.pipe(gulp.dest(config.component.lib));
 	});
 
+	gulp.task('watch:lib', ['build:lib'], function() {
+		return gulp.watch([
+				config.component.src + '/**/*.js',
+				'!**/__tests__/**/*'
+			], ['build:lib']);
+	});
+
 }
