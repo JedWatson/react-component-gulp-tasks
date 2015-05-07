@@ -116,18 +116,22 @@ function initTasks(gulp, config) {
 	require('./tasks/release')(gulp, config);
 
 	var buildTasks = ['build:dist'];
+	var cleanTasks = ['clean:dist'];
 
 	if (config.component.lib) {
 		require('./tasks/lib')(gulp, config);
 		buildTasks.push('build:lib');
+		cleanTasks.push('clean:lib');
 	}
 
 	if (config.example) {
 		require('./tasks/examples')(gulp, config);
 		buildTasks.push('build:examples');
+		cleanTasks.push('clean:examples');
 	}
 
 	gulp.task('build', buildTasks);
+	gulp.task('clean', cleanTasks);
 
 }
 
