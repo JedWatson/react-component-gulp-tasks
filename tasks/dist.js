@@ -15,7 +15,7 @@ module.exports = function(gulp, config) {
 		del([config.component.dist], done);
 	});
 
-	gulp.task('build:dist:scripts', ['clean:dist'], function() {
+	gulp.task('build:dist:scripts', function() {
 
 		var standalone = browserify('./' + config.component.src + '/' + config.component.file, {
 				standalone: config.component.name

@@ -7,7 +7,7 @@ module.exports = function(gulp, config) {
 		del([config.component.lib], done);
 	});
 
-	gulp.task('build:lib', ['clean:lib'], function() {
+	gulp.task('build:lib', function() {
 		return gulp.src([
 				config.component.src + '/**/*.js',
 				'!**/__tests__/**/*'
