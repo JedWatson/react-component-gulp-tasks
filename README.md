@@ -95,7 +95,7 @@ Required config keys are:
 * `example.src` - the directory to load the source files from
 * `example.dist` - the directory to build the distribution to
 * `example.files[]` - files will be copied as-is into the `example.dist` folder
-* `example.scripts[]` - scripts will be bundled by browserify and reactify
+* `example.scripts[]` - scripts will be transpiled with babel and bundled by browserify
 * `example.less[]` - stylesheets will be generated with LESS
 
 ### Example
