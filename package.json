@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "aliasify": "^1.7.2",
+    "babel-core": "^5.4.7",
     "babel-plugin-object-assign": "^1.1.0",
     "babelify": "^6.1.0",
     "browserify": "^10.2.0",
