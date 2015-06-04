@@ -34,11 +34,16 @@
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.2.1"
   },
+  "devDependencies": {
+    "happiness": "*"
+  },
   "peerDependencies": {
     "gulp": "^3.8.0"
   },
   "scripts": {
-    "test": "echo \"no tests yet\" && exit 0"
+    "lint": "happiness",
+    "unit": "echo \"no tests yet\"",
+    "test": "npm run lint && npm run unit"
   },
   "keywords": [
     "react",
