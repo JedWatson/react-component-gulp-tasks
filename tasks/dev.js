@@ -1,9 +1,8 @@
 var connect = require('gulp-connect');
 var path = require('path');
 
-module.exports = function(gulp, config) {
-
-	gulp.task('dev:server', function() {
+module.exports = function (gulp, config) {
+	gulp.task('dev:server', function () {
 		connect.server({
 			root: config.example.dist,
 			fallback: path.join(config.example.dist, 'index.html'),
@@ -12,9 +11,5 @@ module.exports = function(gulp, config) {
 		});
 	});
 
-	gulp.task('dev', [
-		'dev:server',
-		'watch:examples'
-	]);
-
-}
+	gulp.task('dev', ['dev:server', 'watch:examples']);
+};

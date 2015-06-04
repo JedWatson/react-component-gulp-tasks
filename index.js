@@ -1,6 +1,6 @@
-var defaults = require('defaults')
-var capitalize = require('capitalize')
-var camelCase = require('camelcase')
+var defaults = require('defaults');
+var capitalize = require('capitalize');
+var camelCase = require('camelcase');
 
 // Extract package.json metadata
 function readPackageJSON () {
@@ -21,9 +21,9 @@ function readPackageJSON () {
  */
 function initTasks (gulp, config) {
 	var pkg = readPackageJSON();
-	var name = capitalize(camelCase(config.component.pkgName || pkg.name))
+	var name = capitalize(camelCase(config.component.pkgName || pkg.name));
 
-	config = defaults(config, { aliasify: pkg.aliasify })
+	config = defaults(config, { aliasify: pkg.aliasify });
 	config.component = defaults(config.component, {
 		pkgName: pkg.name,
 		dependencies: pkg.deps,

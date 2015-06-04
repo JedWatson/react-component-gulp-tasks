@@ -18,7 +18,7 @@ module.exports = {
 			path: 'less'
 		}
 	},
-	
+
 	example: {
 		src: 'example/src',
 		dist: 'example/dist',
@@ -33,5 +33,4 @@ module.exports = {
 			'app.less'
 		]
 	}
-	
 };
