@@ -1,4 +1,6 @@
-var _ = require('lodash');
+var defaults = require('defaults')
+var capitalize = require('capitalize')
+var camelCase = require('camelcase')
 
 /**
  * Helper method to extract metadata from package.json
@@ -37,21 +39,21 @@ function initTasks(gulp, config) {
 	if (!config.component) config.component = {};
 
 	if (!config.component.pkgName || !config.component.deps) {
-		_.defaults(config.component, {
+		defaults(config.component, {
 			pkgName: pkg.name,
 			dependencies: pkg.deps
 		});
 	}
 
 	if (!config.component.name) {
-		config.component.name = _.capitalize(_.camelCase(config.component.pkgName));
+		config.component.name = capitalize(camelCase(config.component.pkgName));
 	}
 
 	if (!config.aliasify) {
 		config.aliasify = pkg.aliasify;
 	}
 
-	_.defaults(config.component, {
+	defaults(config.component, {
 		src: 'src',
 		lib: 'lib',
 		dist: 'dist',
@@ -60,7 +62,7 @@ function initTasks(gulp, config) {
 
 	if (config.example) {
 		if (config.example === true) config.example = {};
-		_.defaults(config.example, {
+		defaults(config.example, {
 			src: 'example/src',
 			dist: 'example/dist',
 			files: [
