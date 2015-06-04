@@ -2,26 +2,15 @@ var defaults = require('defaults')
 var capitalize = require('capitalize')
 var camelCase = require('camelcase')
 
-/**
- * Helper method to extract metadata from package.json
- */
-
-function readPackageJSON() {
+// Extract package.json metadata
+function readPackageJSON () {
 	var pkg = JSON.parse(require('fs').readFileSync('./package.json'));
-	var deps = [];
-	if (pkg.dependencies) {
-		Object.keys(pkg.dependencies).forEach(function(i) {
-			deps.push(i);
-		});
-	}
-	if (pkg.peerDependencies) {
-		Object.keys(pkg.peerDependencies).forEach(function(i) {
-			deps.push(i);
-		});
-	}
+	var dependencies = Object.keys(pkg.dependencies);
+	var peerDependencies = Object.keys(pkg.peerDependencies);
+
 	return {
 		name: pkg.name,
-		deps: deps,
+		deps: dependencies.concat(peerDependencies),
 		aliasify: pkg.aliasify
 	};
 }
@@ -30,50 +19,30 @@ function readPackageJSON() {
  * This package exports a function that binds tasks to a gulp instance
  * based on the provided config.
  */
-
-function initTasks(gulp, config) {
-
+function initTasks (gulp, config) {
 	var pkg = readPackageJSON();
+	var name = capitalize(camelCase(config.component.pkgName || pkg.name))
 
-	if (!config) config = {};
-	if (!config.component) config.component = {};
-
-	if (!config.component.pkgName || !config.component.deps) {
-		defaults(config.component, {
-			pkgName: pkg.name,
-			dependencies: pkg.deps
-		});
-	}
-
-	if (!config.component.name) {
-		config.component.name = capitalize(camelCase(config.component.pkgName));
-	}
-
-	if (!config.aliasify) {
-		config.aliasify = pkg.aliasify;
-	}
-
-	defaults(config.component, {
+	config = defaults(config, { aliasify: pkg.aliasify })
+	config.component = defaults(config.component, {
+		pkgName: pkg.name,
+		dependencies: pkg.deps,
+		name: name,
 		src: 'src',
 		lib: 'lib',
 		dist: 'dist',
-		file: config.component.name + '.js'
+		file: (config.component.name || name) + '.js'
 	});
 
 	if (config.example) {
 		if (config.example === true) config.example = {};
+
 		defaults(config.example, {
 			src: 'example/src',
 			dist: 'example/dist',
-			files: [
-				'index.html'
-			],
-			scripts: [
-				'example.js'
-			],
-			less: [
-				'example.less'
-			]
+			files: ['index.html'],
+			scripts: ['example.js'],
+			less: ['example.less']
 		});
 	}
 
@@ -99,7 +68,6 @@ function initTasks(gulp, config) {
 
 	gulp.task('build', buildTasks);
 	gulp.task('clean', cleanTasks);
-
 }
 
 module.exports = initTasks;
