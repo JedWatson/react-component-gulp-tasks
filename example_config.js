@@ -3,13 +3,9 @@ var pkg = JSON.parse(require('fs').readFileSync('./package.json'));
 
 // Get default dependencies from package.json.
 // Dependencies can be customised by hard-coding this array.
-var dependencies = [];
-Object.keys(pkg.dependencies).forEach(function(i) {
-	dependencies.push(i);
-});
+var dependencies = [].concat(Object.keys(pkg.dependencies));
 
 module.exports = {
-	
 	component: {
 		file: 'MyComponent.js',
 		name: 'MyComponent',

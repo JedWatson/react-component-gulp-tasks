@@ -11,14 +11,15 @@
   },
   "dependencies": {
     "aliasify": "^1.7.2",
-    "babel-core": "^5.2.16",
     "babel-plugin-object-assign": "^1.1.0",
-    "babelify": "^6.0.2",
-    "browserify": "^10.1.1",
+    "babelify": "^6.1.0",
+    "browserify": "^10.2.0",
     "browserify-shim": "^3.8.6",
+    "camelcase": "^1.1.0",
+    "capitalize": "^1.0.0",
     "chalk": "^1.0.0",
-    "del": "^1.1.1",
-    "gulp": "^3.8.11",
+    "defaults": "^1.0.2",
+    "del": "^1.2.0",
     "gulp-babel": "^5.1.0",
     "gulp-bump": "^0.3.0",
     "gulp-connect": "^2.2.0",
@@ -29,12 +30,12 @@
     "gulp-streamify": "^0.0.5",
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.4",
-    "lodash": "^3.8.0",
     "merge-stream": "^0.1.7",
-    "run-sequence": "^1.1.0",
-    "semver": "^4.3.4",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.2.1"
+  },
+  "peerDependencies": {
+    "gulp": "^3.8.0"
   },
   "scripts": {
     "test": "echo \"no tests yet\" && exit 0"
