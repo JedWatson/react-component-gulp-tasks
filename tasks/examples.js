@@ -26,8 +26,8 @@ module.exports = function (gulp, config) {
 		return watchify(target)
 			.on('update', function (scriptIds) {
 				scriptIds = scriptIds
-					.filter(function (x) { return x.substr(0, 2) !== './' })
-					.map(function (x) { return chalk.blue(x.replace(__dirname, '')) });
+					.filter(function (x) { return x.substr(0, 2) !== './'; })
+					.map(function (x) { return chalk.blue(x.replace(__dirname, '')); });
 
 				if (scriptIds.length > 1) {
 					gutil.log(scriptIds.length + ' Scripts updated:\n* ' + scriptIds.join('\n* ') + '\nrebuilding...');
@@ -112,7 +112,7 @@ module.exports = function (gulp, config) {
 			return merge(bundles.concat(examples.map(function (eg) {
 				return doBundle(eg.bundle, eg.file, dest);
 			})));
-		}
+		};
 	}
 
 	gulp.task('clean:examples', function (done) { del([config.example.dist], done); });
@@ -145,7 +145,9 @@ module.exports = function (gulp, config) {
 		'build:example:css'
 	], function () {
 		buildExampleScripts(true)();
-		gulp.watch(config.example.files.map(function (i) { return config.example.src + '/' + i }), ['build:example:files']);
+		gulp.watch(config.example.files.map(function (i) {
+			return config.example.src + '/' + i;
+		}), ['build:example:files']);
 
 		var watchLESS = [];
 		if (config.example.less) {
@@ -158,4 +160,4 @@ module.exports = function (gulp, config) {
 
 		gulp.watch(watchLESS, ['build:example:css']);
 	});
-}
+};

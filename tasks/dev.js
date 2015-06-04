@@ -12,4 +12,4 @@ module.exports = function (gulp, config) {
 	});
 
 	gulp.task('dev', ['dev:server', 'watch:examples']);
-}
+};

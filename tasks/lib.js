@@ -15,4 +15,4 @@ module.exports = function (gulp, config) {
 	gulp.task('watch:lib', ['build:lib'], function () {
 		return gulp.watch([config.component.src + '/**/*.js', '!**/__tests__/**/*'], ['build:lib']);
 	});
-}
+};

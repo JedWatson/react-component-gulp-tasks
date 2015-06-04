@@ -12,4 +12,4 @@ module.exports = function (gulp, config) {
 	gulp.task('bump', getBumpTask('patch'));
 	gulp.task('bump:minor', getBumpTask('minor'));
 	gulp.task('bump:major', getBumpTask('major'));
-}
+};
