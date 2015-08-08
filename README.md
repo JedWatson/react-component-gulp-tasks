@@ -70,7 +70,7 @@ var gulp = require('gulp'),
 	initGulpTasks = require('react-component-gulp-tasks'),
 	taskConfig = require('./config');
 
-initGulpTasks(gulp, config);
+initGulpTasks(gulp, taskConfig);
 ```
 
 ### Task Config
