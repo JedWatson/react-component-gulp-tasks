@@ -115,7 +115,7 @@ module.exports = function (gulp, config) {
 		};
 	}
 
-	gulp.task('clean:examples', function (done) { del([config.example.dist], done); });
+	gulp.task('clean:examples', function () { return del([config.example.dist]); });
 	gulp.task('watch:example:scripts', buildExampleScripts(true));
 	gulp.task('build:example:scripts', buildExampleScripts());
 

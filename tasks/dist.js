@@ -11,7 +11,7 @@ var uglify = require('gulp-uglify');
 
 module.exports = function (gulp, config) {
 	gulp.task('clean:dist', function (done) {
-		del([config.component.dist], done);
+		return del([config.component.dist]);
 	});
 
 	gulp.task('build:dist:scripts', function () {

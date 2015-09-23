@@ -2,8 +2,8 @@ var babel = require('gulp-babel');
 var del = require('del');
 
 module.exports = function (gulp, config) {
-	gulp.task('clean:lib', function (done) {
-		del([config.component.lib], done);
+	gulp.task('clean:lib', function () {
+		return del([config.component.lib]);
 	});
 
 	gulp.task('build:lib', function () {
