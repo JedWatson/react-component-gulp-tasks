@@ -5,8 +5,8 @@ var camelCase = require('camelcase');
 // Extract package.json metadata
 function readPackageJSON () {
 	var pkg = JSON.parse(require('fs').readFileSync('./package.json'));
-	var dependencies = Object.keys(pkg.dependencies);
-	var peerDependencies = Object.keys(pkg.peerDependencies);
+	var dependencies = pkg.dependencies ? Object.keys(pkg.dependencies) : [];
+	var peerDependencies = pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : [];
 
 	return {
 		name: pkg.name,
