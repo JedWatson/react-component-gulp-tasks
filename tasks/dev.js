@@ -6,7 +6,7 @@ module.exports = function (gulp, config) {
 		connect.server({
 			root: config.example.dist,
 			fallback: path.join(config.example.dist, 'index.html'),
-			port: 8000,
+			port: process.env.PORT || 8000,
 			livereload: true
 		});
 	});
