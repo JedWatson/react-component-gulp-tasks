@@ -97,6 +97,7 @@ Required config keys are:
 * `example.files[]` - files will be copied as-is into the `example.dist` folder
 * `example.scripts[]` - scripts will be transpiled with babel and bundled by browserify
 * `example.less[]` - stylesheets will be generated with LESS
+* `example.port` - port to serve examples on, defaults to `8000`
 
 ### Example
 
@@ -154,4 +155,3 @@ Please let me know if you think anything could be done better or you'd like to s
 ## License
 
 MIT. Copyright (c) 2014 Jed Watson.
-
