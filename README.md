@@ -66,9 +66,9 @@ npm install --save-dev gulp react-component-gulp-tasks
 In your gulpfile, call this package with your `gulp` instance and `config`. It will add the tasks to gulp for you. You can also add your own tasks if you want.
 
 ```javascript
-var gulp = require('gulp'),
-	initGulpTasks = require('react-component-gulp-tasks'),
-	taskConfig = require('./config');
+var gulp = require('gulp');
+var initGulpTasks = require('react-component-gulp-tasks');
+var taskConfig = require('./config');
 
 initGulpTasks(gulp, taskConfig);
 ```
