@@ -8,6 +8,7 @@ var shim = require('browserify-shim');
 var source = require('vinyl-source-stream');
 var streamify = require('gulp-streamify');
 var uglify = require('gulp-uglify');
+var minifyCSS = require('gulp-minify-css');
 
 module.exports = function (gulp, config) {
 	gulp.task('clean:dist', function (done) {
@@ -44,7 +45,11 @@ module.exports = function (gulp, config) {
 		gulp.task('build:dist:css', ['clean:dist'], function () {
 			return gulp.src(config.component.less.path + '/' + config.component.less.entry)
 				.pipe(less())
-				.pipe(gulp.dest('dist'));
+				.pipe(rename(config.component.pkgName + '.css'))
+				.pipe(gulp.dest('dist'))
+				.pipe(rename(config.component.pkgName + '.min.css'))
+				.pipe(minifyCSS())
+				.pipe(gulp.dest('dist'))
 		});
 		buildTasks.push('build:dist:css');
 	}
