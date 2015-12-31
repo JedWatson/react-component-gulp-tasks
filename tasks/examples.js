@@ -75,6 +75,7 @@ module.exports = function (gulp, config) {
 				fileBundle.transform(babelify.configure({
 					plugins: [require('babel-plugin-object-assign')]
 				}));
+				fileBundle.transform('brfs');
 				config.aliasify && fileBundle.transform(aliasify);
 				return {
 					file: file,
