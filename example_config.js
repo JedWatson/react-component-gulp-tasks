@@ -33,4 +33,20 @@ module.exports = {
 			'app.less'
 		]
 	}
+
+	// Build example in scss
+	// example: {
+	// 	src: 'example/src',
+	// 	dist: 'example/dist',
+	// 	files: [
+	// 		'index.html',
+	// 		'standalone.html'
+	// 	],
+	// 	scripts: [
+	// 		'app.js'
+	// 	],
+	// 	scss: [
+	// 		'app.scss'
+	// 	]
+	// }
 };

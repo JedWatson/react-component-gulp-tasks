@@ -3,6 +3,7 @@ var browserify = require('browserify');
 var del = require('del');
 var gutil = require('gulp-util');
 var less = require('gulp-less');
+var sass = require('gulp-sass');
 var rename = require('gulp-rename');
 var shim = require('browserify-shim');
 var source = require('vinyl-source-stream');
@@ -49,7 +50,20 @@ module.exports = function (gulp, config) {
 				.pipe(gulp.dest('dist'))
 				.pipe(rename(config.component.pkgName + '.min.css'))
 				.pipe(minifyCSS())
+				.pipe(gulp.dest('dist'));
+		});
+		buildTasks.push('build:dist:css');
+	}
+
+	if (config.component.scss && config.component.scss.entry) {
+		gulp.task('build:dist:css', ['clean:dist'], function () {
+			return gulp.src(config.component.scss.path + '/' + config.component.scss.entry)
+				.pipe(sass())
+				.pipe(rename(config.component.pkgName + '.css'))
 				.pipe(gulp.dest('dist'))
+				.pipe(rename(config.component.pkgName + '.min.css'))
+				.pipe(minifyCSS())
+				.pipe(gulp.dest('dist'));
 		});
 		buildTasks.push('build:dist:css');
 	}

@@ -37,13 +37,25 @@ function initTasks (gulp, config) {
 	if (config.example) {
 		if (config.example === true) config.example = {};
 
-		defaults(config.example, {
-			src: 'example/src',
-			dist: 'example/dist',
-			files: ['index.html'],
-			scripts: ['example.js'],
-			less: ['example.less']
-		});
+		if (config.example.less) {
+			defaults(config.example, {
+				src: 'example/src',
+				dist: 'example/dist',
+				files: ['index.html'],
+				scripts: ['example.js'],
+				less: ['example.less']
+			});	
+		}
+
+		if (config.example.scss) {
+			defaults(config.example, {
+				src: 'example/src',
+				dist: 'example/dist',
+				files: ['index.html'],
+				scripts: ['example.js'],
+				scss: ['example.scss']
+			});	
+		}		
 	}
 
 	require('./tasks/bump')(gulp, config);
