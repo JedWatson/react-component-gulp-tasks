@@ -6,6 +6,7 @@ var connect = require('gulp-connect');
 var del = require('del');
 var gutil = require('gulp-util');
 var less = require('gulp-less');
+var sass = require('gulp-sass');
 var merge = require('merge-stream');
 var shim = require('browserify-shim');
 var source = require('vinyl-source-stream');
@@ -127,12 +128,21 @@ module.exports = function (gulp, config) {
 	});
 
 	gulp.task('build:example:css', function () {
-		if (!config.example.less) return;
+		if (!config.example.less && !config.example.scss) return;
 
-		return gulp.src(config.example.src + '/' + config.example.less)
-			.pipe(less())
-			.pipe(gulp.dest(config.example.dist))
-			.pipe(connect.reload());
+		if (config.example.less) {
+			return gulp.src(config.example.src + '/' + config.example.less)
+				.pipe(less())
+				.pipe(gulp.dest(config.example.dist))
+				.pipe(connect.reload());
+		}
+
+		if (config.example.scss) {
+			return gulp.src(config.example.src + '/' + config.example.scss)
+				.pipe(sass())
+				.pipe(gulp.dest(config.example.dist))
+				.pipe(connect.reload());
+		}
 	});
 
 	gulp.task('build:examples', [
@@ -150,15 +160,23 @@ module.exports = function (gulp, config) {
 			return config.example.src + '/' + i;
 		}), ['build:example:files']);
 
-		var watchLESS = [];
+		var watchCss = [];
 		if (config.example.less) {
-			watchLESS.push(config.example.src + '/' + config.example.less);
+			watchCss.push(config.example.src + '/' + config.example.less);
 		}
 
 		if (config.component.less && config.component.less.path) {
-			watchLESS.push(config.component.less.path + '/**/*.less');
+			watchCss.push(config.component.less.path + '/**/*.less');
 		}
 
-		gulp.watch(watchLESS, ['build:example:css']);
+		if (config.example.scss) {
+			watchCss.push(config.example.src + '/' + config.example.scss);
+		}
+
+		if (config.component.scss && config.component.scss.path) {
+			watchCss.push(config.component.scss.path + '/**/*.scss');
+		}
+
+		gulp.watch(watchCss, ['build:example:css']);
 	});
 };

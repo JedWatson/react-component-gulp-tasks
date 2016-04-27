@@ -154,4 +154,4 @@ Please let me know if you think anything could be done better or you'd like to s
 
 ## License
 
-MIT. Copyright (c) 2014 Jed Watson.
+MIT. Copyright (c) 2016 Jed Watson.
