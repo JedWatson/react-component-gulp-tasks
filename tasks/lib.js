@@ -8,7 +8,7 @@ module.exports = function (gulp, config) {
 
 	gulp.task('build:lib', function () {
 		return gulp.src([ config.component.src + '/**/*.js', '!**/__tests__/**/*' ])
-			.pipe(babel({ plugins: [require('babel-plugin-object-assign')] }))
+			.pipe(babel())
 			.pipe(gulp.dest(config.component.lib));
 	});
 

@@ -52,18 +52,14 @@ module.exports = function (gulp, config) {
 			var common = browserify(opts);
 
 			var bundle = browserify(opts);
-			bundle.transform(babelify.configure({
-				plugins: [require('babel-plugin-object-assign')]
-			}));
+			bundle.transform('babelify');
 			config.aliasify && bundle.transform(aliasify);
 			bundle.require('./' + config.component.src + '/' + config.component.file, { expose: config.component.pkgName });
 
 			var standalone = false;
 			if (config.example.standalone) {
 				standalone = browserify('./' + config.component.src + '/' + config.component.file, { standalone: config.component.name });
-				standalone.transform(babelify.configure({
-					plugins: [require('babel-plugin-object-assign')]
-				}));
+				standalone.transform('babelify');
 				config.aliasify && standalone.transform(aliasify);
 				standalone.transform(shim);
 			}
@@ -72,9 +68,7 @@ module.exports = function (gulp, config) {
 				var fileBundle = browserify(opts);
 				fileBundle.exclude(config.component.pkgName);
 				fileBundle.add('./' + config.example.src + '/' + file);
-				fileBundle.transform(babelify.configure({
-					plugins: [require('babel-plugin-object-assign')]
-				}));
+				fileBundle.transform('babelify');
 				fileBundle.transform('brfs');
 				config.aliasify && fileBundle.transform(aliasify);
 				return {
