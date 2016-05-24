@@ -151,7 +151,7 @@ module.exports = function (gulp, config) {
 		}), ['build:example:files']);
 
 		var watchLESS = [];
-		if (config.example.less.length > 0) {
+		if (config.example.less && .example.less.length > 0) {
 			config.example.less.forEach(function(fileName) {
 				watchLESS.push(config.example.src + '/' + fileName);
 			})
