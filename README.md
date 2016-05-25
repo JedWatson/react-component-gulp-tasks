@@ -96,7 +96,7 @@ Required config keys are:
 * `example.dist` - the directory to build the distribution to
 * `example.files[]` - files will be copied as-is into the `example.dist` folder
 * `example.scripts[]` - scripts will be transpiled with babel and bundled by browserify
-* `example.less[]` - stylesheets will be generated with LESS
+* `example.less[]` - stylesheets will be generated with LESS. Remember to update *css* file references on html.
 * `example.port` - port to serve examples on, defaults to `8000`
 
 ### Example
