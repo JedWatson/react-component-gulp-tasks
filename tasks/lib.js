@@ -6,11 +6,25 @@ module.exports = function (gulp, config) {
 		return del([config.component.lib]);
 	});
 
-	gulp.task('build:lib', function () {
+  gulp.task('build:lib:scripts', ['clean:lib'], function () {
 		return gulp.src([ config.component.src + '/**/*.js', '!**/__tests__/**/*' ])
 			.pipe(babel({ plugins: [require('babel-plugin-object-assign')] }))
 			.pipe(gulp.dest(config.component.lib));
 	});
+
+  gulp.task('build:lib:css', ['clean:lib'], function () {
+    return gulp.src(config.component.less.path + '/' + config.component.less.entry)
+      .pipe(less())
+        .pipe(gulp.dest(config.component.lib))
+  });
+
+
+  var buildTasks = ['clean:lib', 'build:lib:scripts'];
+
+  if (config.component.less && config.component.less.entry) {
+    buildTasks.push('build:lib:css');
+  }
+
 
 	gulp.task('watch:lib', ['build:lib'], function () {
 		return gulp.watch([config.component.src + '/**/*.js', '!**/__tests__/**/*'], ['build:lib']);
