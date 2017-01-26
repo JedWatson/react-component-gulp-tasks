@@ -7,22 +7,27 @@ var del = require('del');
 var gutil = require('gulp-util');
 var less = require('gulp-less');
 var merge = require('merge-stream');
-var shim = require('browserify-shim');
 var source = require('vinyl-source-stream');
+var umd = require('gulp-umd');
 var watchify = require('watchify');
 
 module.exports = function (gulp, config) {
-	function doBundle (target, name, dest) {
+	function doBundle (target, name, dest, dependencies) {
 		return target.bundle()
 			.on('error', function (e) {
 				gutil.log('Browserify Error', e);
 			})
 			.pipe(source(name))
+			.pipe(umd({
+				dependencies: function(file){
+					return dependencies;
+				}
+			}))
 			.pipe(gulp.dest(dest))
 			.pipe(connect.reload());
 	}
 
-	function watchBundle (target, name, dest) {
+	function watchBundle (target, name, dest, dependencies) {
 		return watchify(target)
 			.on('update', function (scriptIds) {
 				scriptIds = scriptIds
@@ -35,7 +40,7 @@ module.exports = function (gulp, config) {
 					gutil.log(scriptIds[0] + ' updated, rebuilding...');
 				}
 
-				doBundle(target, name, dest);
+				doBundle(target, name, dest, dependencies);
 			})
 			.on('time', function (time) {
 				gutil.log(chalk.green(name + ' built in ' + (Math.round(time / 10) / 100) + 's'));
@@ -65,7 +70,6 @@ module.exports = function (gulp, config) {
 					plugins: [require('babel-plugin-object-assign')]
 				}));
 				config.aliasify && standalone.transform(aliasify);
-				standalone.transform(shim);
 			}
 
 			var examples = config.example.scripts.map(function (file) {
@@ -85,11 +89,6 @@ module.exports = function (gulp, config) {
 
 			config.component.dependencies.forEach(function (pkg) {
 				common.require(pkg);
-				bundle.exclude(pkg);
-				if (standalone) standalone.exclude(pkg);
-				examples.forEach(function (eg) {
-					eg.bundle.exclude(pkg);
-				});
 			});
 
 			if (dev) {
@@ -102,16 +101,16 @@ module.exports = function (gulp, config) {
 			}
 
 			var bundles = [
-				doBundle(common, 'common.js', dest),
-				doBundle(bundle, 'bundle.js', dest)
+				doBundle(common, 'common.js', dest, config.component.dependencies),
+				doBundle(bundle, 'bundle.js', dest, config.component.dependencies)
 			];
 
 			if (standalone) {
-				bundles.push(doBundle(standalone, 'standalone.js', dest));
+				bundles.push(doBundle(standalone, 'standalone.js', dest, config.component.dependencies));
 			}
 
 			return merge(bundles.concat(examples.map(function (eg) {
-				return doBundle(eg.bundle, eg.file, dest);
+				return doBundle(eg.bundle, eg.file, dest, config.component.dependencies);
 			})));
 		};
 	}
