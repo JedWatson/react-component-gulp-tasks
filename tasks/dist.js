@@ -4,10 +4,10 @@ var del = require('del');
 var gutil = require('gulp-util');
 var less = require('gulp-less');
 var rename = require('gulp-rename');
-var shim = require('browserify-shim');
 var source = require('vinyl-source-stream');
 var streamify = require('gulp-streamify');
 var uglify = require('gulp-uglify');
+var umd = require('gulp-umd');
 var minifyCSS = require('gulp-minify-css');
 
 module.exports = function (gulp, config) {
@@ -21,18 +21,18 @@ module.exports = function (gulp, config) {
 		})
 		.transform(babelify.configure({
 			plugins: [require('babel-plugin-object-assign')]
-		}))
-		.transform(shim);
-
-		config.component.dependencies.forEach(function (pkg) {
-			standalone.exclude(pkg);
-		});
+		}));
 
 		return standalone.bundle()
 			.on('error', function (e) {
 				gutil.log('Browserify Error', e);
 			})
 			.pipe(source(config.component.pkgName + '.js'))
+			.pipe(umd({
+				dependencies: function(file){
+					return config.component.dependencies;
+				}
+			}))
 			.pipe(gulp.dest(config.component.dist))
 			.pipe(rename(config.component.pkgName + '.min.js'))
 			.pipe(streamify(uglify()))
