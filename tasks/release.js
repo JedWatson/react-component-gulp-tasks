@@ -19,7 +19,7 @@ module.exports = function (gulp, config) {
 
 	gulp.task('publish:npm', function (done) {
 		require('child_process')
-			.spawn('npm', ['publish'], { stdio: 'inherit' })
+			.spawn(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['publish'], { stdio: 'inherit' })
 			.on('close', done);
 	});
 
