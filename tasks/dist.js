@@ -49,7 +49,7 @@ module.exports = function (gulp, config) {
 				.pipe(gulp.dest('dist'))
 				.pipe(rename(config.component.pkgName + '.min.css'))
 				.pipe(minifyCSS())
-				.pipe(gulp.dest('dist'))
+				.pipe(gulp.dest('dist'));
 		});
 		buildTasks.push('build:dist:css');
 	}
